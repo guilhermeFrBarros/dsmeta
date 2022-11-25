@@ -17,15 +17,20 @@ function SalesCard() {
     const [maxDate, setMaxDate] = useState(max);
 
     const [sales, setSale] =useState<Sale[]>([]);
-
-    useEffect(() => {//Muito importante 
+ 
+    useEffect(() => {
+        
+        const dmin = minDate.toISOString().slice(0, 10);
+        const dmax = maxDate.toISOString().slice(0, 10);
+                    
+                    //Muito importante 
                      // serve para dizer que a função dentro do useEffect so vai ser executa depois da renderização completa do do componente
-        axios.get(`${BASE_URL}/sales`)// essa função é a requisição 
+        axios.get(`${BASE_URL}/sales?minDate=${dmin}&maxDate=${dmax}`)// essa função é a requisição 
             .then(response => { 
                 setSale(response.data.content); 
                 console.log(response.data.content);
             });
-    }, []); // o [] serve para dizer que vai ser executada a função apenas uma vez
+    }, [minDate, maxDate]); // o [] serve para dizer que vai ser executada a função apenas uma vez
     
     return (
         <div className="dsmeta-card">
