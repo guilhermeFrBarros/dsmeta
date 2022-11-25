@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import NotificationButton from '../NotificationButton';
@@ -12,6 +13,14 @@ function SalesCard() {
 
     const [minDate, setMinDate] = useState(min); 
     const [maxDate, setMaxDate] = useState(max);
+
+    useEffect(() => {//Muito importante 
+                     // serve para dizer que a função dentro do useEffect so vai ser executa depois da renderização completa do do componente
+        axios.get("http://localhost:8080/sales")// essa função é a requisição 
+            .then(response => { 
+                console.log(response.data);
+            });
+    }, []); // o [] serve para dizer que vai ser executada a função apenas uma vez
     
     return (
         <div className="dsmeta-card">
